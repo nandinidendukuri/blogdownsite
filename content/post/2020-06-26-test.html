@@ -1,0 +1,75 @@
+---
+title: Test
+author: Nandini
+date: '2020-06-26'
+slug: test
+categories:
+  - Blogging
+tags:
+  - R Markdown
+  - blogdown
+---
+
+
+
+<pre class="r"><code>knitr::opts_chunk$set(warning=FALSE, message=FALSE)</code></pre>
+<div id="library" class="section level2">
+<h2>Library</h2>
+<pre class="r"><code>library(rjags)
+library(mcmcplots)</code></pre>
+</div>
+<div id="binomial-proportion" class="section level2">
+<h2>Binomial Proportion</h2>
+<pre class="r"><code>modelString = 
+  &quot;model { 
+  
+    x~dbin(theta,n)        #  Likelihood function
+
+    theta ~ dbeta(1,1)     #  Prior density for theta
+    
+  }&quot;
+
+#Write the model to a file
+writeLines(modelString,con=&quot;model.txt&quot;)
+
+#Compiling the model together with the data
+jagsModel = jags.model(&quot;model.txt&quot;,data=list(x=6,n=20))</code></pre>
+<pre><code>## Compiling model graph
+##    Resolving undeclared variables
+##    Allocating nodes
+## Graph information:
+##    Observed stochastic nodes: 1
+##    Unobserved stochastic nodes: 1
+##    Total graph size: 4
+## 
+## Initializing model</code></pre>
+<pre class="r"><code>#Burn-in
+update( jagsModel,n.iter=1000)
+
+
+#Sampling from the posterior distribution:
+
+# The parameter(s) to be monitored.
+parameters = c( &quot;theta&quot;)  
+
+output = coda.samples(jagsModel,variable.names=parameters,n.iter=5000)
+
+# Summary statistics 
+summary(output) </code></pre>
+<pre><code>## 
+## Iterations = 2001:7000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 5000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean             SD       Naive SE Time-series SE 
+##       0.318895       0.097217       0.001375       0.001727 
+## 
+## 2. Quantiles for each variable:
+## 
+##   2.5%    25%    50%    75%  97.5% 
+## 0.1440 0.2488 0.3137 0.3840 0.5192</code></pre>
+</div>

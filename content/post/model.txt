@@ -1,29 +1,7 @@
-model {
+model { 
+  
+    x~dbin(theta,n)        #  Likelihood function
 
-y[1:4] ~ dmulti(p[1:4],N)
-z[1:4] ~ dmulti(q[1:4],N)
-
-p[1] <- prev*sens[1]*sens[2]*(1-sens[3]) + (1-prev)*(1-spec[1])*(1-spec[2])*spec[3] + prev*sens[1]*sens[2]*sens[3] + (1-prev)*(1-spec[1])*(1-spec[2])*(1-spec[3])
-p[2] <- prev*sens[1]*(1-sens[2])*(1-sens[3]) + (1-prev)*(1-spec[1])*spec[2]*spec[3] + prev*sens[1]*(1-sens[2])*sens[3] + (1-prev)*(1-spec[1])*spec[2]*(1-spec[3])
-p[3] <- prev*(1-sens[1])*sens[2]*(1-sens[3]) + (1-prev)*spec[1]*(1-spec[2])*spec[3] + prev*(1-sens[1])*sens[2]*sens[3] + (1-prev)*spec[1]*(1-spec[2])*(1-spec[3])
-p[4] <- prev*(1-sens[1])*(1-sens[2])*(1-sens[3]) + (1-prev)*spec[1]*spec[2]*spec[3] + prev*(1-sens[1])*(1-sens[2])*sens[3] + (1-prev)*spec[1]*spec[2]*(1-spec[3])
-
-q[1] <- prev*sens[1]*(1-sens[2])*sens[3] + (1-prev)*(1-spec[1])*spec[2]*(1-spec[3]) + prev*sens[1]*sens[2]*sens[3] + (1-prev)*(1-spec[1])*(1-spec[2])*(1-spec[3])
-q[2] <- prev*sens[1]*(1-sens[2])*(1-sens[3]) + (1-prev)*(1-spec[1])*spec[2]*spec[3] + prev*sens[1]*sens[2]*(1-sens[3]) + (1-prev)*(1-spec[1])*(1-spec[2])*spec[3]
-q[3] <- prev*(1-sens[1])*(1-sens[2])*sens[3] + (1-prev)*spec[1]*spec[2]*(1-spec[3]) + prev*(1-sens[1])*sens[2]*sens[3] + (1-prev)*spec[1]*(1-spec[2])*(1-spec[3])
-q[4] <- prev*(1-sens[1])*(1-sens[2])*(1-sens[3]) + (1-prev)*spec[1]*spec[2]*spec[3] + prev*(1-sens[1])*sens[2]*(1-sens[3]) + (1-prev)*spec[1]*(1-spec[2])*spec[3]
-
-
-sens[1]<- 0.9
-spec[1]<- 0.9
-
-for(i in 2:3) {
-
-	sens[i] ~ dbeta(1,1)
-	spec[i] ~ dbeta(1,1)
-
-}
-
-prev ~ dbeta(1,1)
-
-}
+    theta ~ dbeta(1,1)     #  Prior density for theta
+    
+  }
