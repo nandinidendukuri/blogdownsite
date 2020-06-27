@@ -1,0 +1,18 @@
+---
+title: Test
+author: Nandini
+date: '2020-06-26'
+slug: test
+categories:
+  - Blogging
+tags:
+  - R Markdown
+  - blogdown
+---
+# Test
+
+Testing to see how blogdown works:
+* Is it useful?
+* Is it easy?
+* Is it fun?
+
