@@ -16,6 +16,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ## Library
 ```{r}
 library(rjags)
+library(mcmcplots)
 ```
 
 ## Binomial Proportion
@@ -45,13 +46,6 @@ update( jagsModel,n.iter=1000)
 parameters = c( "theta")  
 
 output = coda.samples(jagsModel,variable.names=parameters,n.iter=5000)
-
-# Examining the posterior sample
-# Density plots
-denplot(output, parms=c("theta"))
-
-# History plot(s)
-traplot(output, parms=c("theta"))
 
 # Summary statistics 
 summary(output) 
