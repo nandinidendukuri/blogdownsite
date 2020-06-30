@@ -1,7 +1,0 @@
-model { 
-  
-    x~dbin(theta,n)        #  Likelihood function
-
-    theta ~ dbeta(1,1)     #  Prior density for theta
-    
-  }
